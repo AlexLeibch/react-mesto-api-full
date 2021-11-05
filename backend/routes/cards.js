@@ -10,8 +10,7 @@ cardsRouter.get('/cards', getCard);
 cardsRouter.post('/cards', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required()
-      .regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
+    link: Joi.string().pattern(new RegExp(/^(ftp|http|https):\/\/[^ "]+$/)),
   }),
 }), createCard);
 cardsRouter.delete('/cards/:cardId', celebrate({
@@ -24,6 +23,7 @@ cardsRouter.put('/cards/:cardId/likes', celebrate({
     cardId: Joi.string().hex().length(24),
   }),
 }), likeCard);
+
 cardsRouter.delete('/cards/:cardId/likes', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().hex().length(24),

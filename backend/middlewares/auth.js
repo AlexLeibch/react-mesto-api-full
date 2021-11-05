@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const BadAuthError = require('../errors/bad-auth-error');
 
-const JWT_SECRET = 'KanbuSquidGame';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
@@ -16,13 +16,12 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev_secret');
   } catch (err) {
     next(new BadAuthError('Ошибка авторизации'));
   }
 
   req.user = payload;
-
   next();
 };
 

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'KanbuSquidGame';
+const { NODE_ENV, JWT_SECRET } = process.env;
 const User = require('../models/user');
 
 const BadAuthError = require('../errors/bad-auth-error');
@@ -116,7 +116,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       return res.send({ token });
     })
     .catch((err) => {
