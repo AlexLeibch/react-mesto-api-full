@@ -29,6 +29,9 @@ const options = {
   origin: [
     'http://localhost:3000',
     'http://topmestobyalex.nomoredomains.xyz',
+    'https://topmestobyalex.nomoredomains.xyz',
+    'http://api.topmestobyalex.nomoredomains.rocks',
+    'https://api.topmestobyalex.nomoredomains.rocks',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
