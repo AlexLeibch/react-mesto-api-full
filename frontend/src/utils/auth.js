@@ -1,5 +1,5 @@
 import api from './api';
-export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.topmestobyalex.nomoredomains.rocks';
 
 
 const checkResponse = (res) => {
