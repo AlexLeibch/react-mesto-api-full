@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { Joi, celebrate, errors } = require('celebrate');
 const cors = require('cors');
+const { isValidUrl } = require('./utils/validation')
 
 const bodyParser = require('body-parser');
 const NotFoundError = require('./errors/not-found-error');
@@ -63,7 +64,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(/^(ftp|http|https):\/\/[^ "]+$/),
+    avatar: Joi.string().custom(isValidUrl),
 
   }),
 }), createUser);

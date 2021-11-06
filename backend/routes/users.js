@@ -1,5 +1,6 @@
 const usersRouter = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const { isValidUrl } = require('../utils/validation')
 const {
   getUsers, getUsersById, updateUser, updateAvatar, getUser,
 } = require('../controllers/users');
@@ -23,7 +24,7 @@ usersRouter.patch('/users/me', celebrate({
 
 usersRouter.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().regex(/^(ftp|http|https):\/\/[^ "]+$/),
+    avatar: Joi.string().custom(isValidUrl),
   }),
 }), updateAvatar);
 
